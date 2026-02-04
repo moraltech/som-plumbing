@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface HeroProps {
@@ -28,13 +29,13 @@ const Hero: React.FC<HeroProps> = ({ onOpenBooking }) => {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-extrabold leading-tight">
+            Som <span className="text-orange-500">Pulibing</span> <br />
             Professional <br />
-            <span className="text-orange-500">Service</span> Solutions 
-            <br />Across the USA
+            Service Solutions 
           </h1>
           
           <p className="text-xl text-blue-50/80 max-w-xl leading-relaxed">
-            From residential repairs to industrial HVAC installations. We provide licensed experts for every home and commercial need. Guaranteed satisfaction, 24/7.
+            From residential repairs to industrial HVAC installations. Som Pulibing provides licensed experts for every home and commercial need. Guaranteed satisfaction, 24/7.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 pt-4">

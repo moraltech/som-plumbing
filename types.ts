@@ -1,7 +1,7 @@
 
 export enum ServiceType {
   ELECTRICAL = 'Electrical',
-  PLUMBING = 'Plumbing',
+  PLUMBING = 'Pulibing',
   HVAC = 'HVAC',
   EMERGENCY = 'Emergency'
 }

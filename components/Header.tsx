@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 const Header: React.FC = () => {
@@ -20,9 +21,26 @@ const Header: React.FC = () => {
 
       {/* Main Nav */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-          <span className="text-2xl font-extrabold text-blue-900 font-montserrat tracking-tight">PROSERVICE</span>
-          <span className="text-2xl font-extrabold text-orange-600 font-montserrat">USA</span>
+        <div 
+          className="flex items-center cursor-pointer h-full py-2" 
+          onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+        >
+          <img 
+            src="https://uploads.onecompiler.io/44cmwnab3/44cmwm67f/som%20pumbinig%202.png" 
+            alt="Som Pulibing Logo" 
+            className="h-full w-auto object-contain max-h-[60px]"
+            onError={(e) => {
+              // Fallback if image fails to load
+              e.currentTarget.style.display = 'none';
+              const parent = e.currentTarget.parentElement;
+              if (parent) {
+                const text = document.createElement('span');
+                text.className = "text-2xl font-extrabold text-blue-900 font-montserrat tracking-tight uppercase";
+                text.innerText = "SOM PULIBING";
+                parent.appendChild(text);
+              }
+            }}
+          />
         </div>
 
         {/* Desktop Links */}

@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const serviceList = [
@@ -8,7 +9,7 @@ const serviceList = [
     features: ['Panel Upgrades', 'EV Charger Install', 'Rewiring', 'Lighting']
   },
   {
-    title: 'Expert Plumbing',
+    title: 'Expert Pulibing',
     description: 'Complete water systems support. From drain cleaning to sophisticated leak detection.',
     icon: '💧',
     features: ['Water Heaters', 'Leak Detection', 'Pipe Repair', 'Remodeling']

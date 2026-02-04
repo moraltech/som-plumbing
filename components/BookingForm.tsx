@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { BookingFormData, ServiceType } from '../types';
 
@@ -26,7 +27,7 @@ const BookingForm: React.FC = () => {
         <div className="text-6xl text-green-500">✅</div>
         <h3 className="text-3xl font-extrabold text-green-900">Request Sent!</h3>
         <p className="text-green-800 text-lg">
-          A ProService USA technician will contact you at <strong>{formData.phone}</strong> within the next hour.
+          A Sompulibing technician will contact you at <strong>{formData.phone}</strong> within the next hour.
         </p>
         <button 
           onClick={() => setSubmitted(false)}
