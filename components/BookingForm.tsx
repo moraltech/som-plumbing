@@ -16,6 +16,7 @@ const BookingForm: React.FC = () => {
   
   const [submitted, setSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [status, setStatus] = useState<ServiceStatus>('REQUESTED');
   const [eta, setEta] = useState(45); // minutes
   const [progress, setProgress] = useState(0); // 0 to 100 for map animation
@@ -63,9 +64,10 @@ const BookingForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSending(true);
+    setErrorMessage(null);
 
     try {
-      // Sending real data to Formspree for hassenali15544@gmail.com
+      // Formspree API call for hassenali15544@gmail.com
       const response = await fetch('https://formspree.io/f/mqakpvel', {
         method: 'POST',
         headers: {
@@ -73,24 +75,28 @@ const BookingForm: React.FC = () => {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
+          fullName: formData.fullName,
+          _replyto: formData.email,
           phone: formData.phone,
-          service: formData.serviceType,
-          urgency: formData.urgency,
-          message: formData.description,
-          _subject: `New HDC Booking Request from ${formData.fullName}`
+          serviceNeeded: formData.serviceType,
+          urgencyLevel: formData.urgency,
+          customerMessage: formData.description,
+          _subject: `HDC Booking: ${formData.fullName} (${formData.urgency})`
         })
       });
 
       if (response.ok) {
         setSubmitted(true);
       } else {
-        throw new Error('Failed to send request');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Khalad ayaa ka dhacay server-ka.');
       }
-    } catch (error) {
-      console.error("Booking error:", error);
-      alert("Waan ka xunnahay, khalad ayaa dhacay. Fadlan hadhow isku day ama naga soo wac: +1 (404) 583-4735");
+    } catch (error: any) {
+      console.error("Booking submission error:", error);
+      setErrorMessage(
+        "Cilad ayaa dhacday: " + (error.message || "Emailka laguma guulaysan in la diro.") + 
+        " Fadlan na soo wac: +1 (404) 583-4735"
+      );
     } finally {
       setIsSending(false);
     }
@@ -131,7 +137,7 @@ const BookingForm: React.FC = () => {
               {(status === 'EN_ROUTE' || status === 'ASSIGNING') && (
                 <span className="w-1.5 h-1.5 rounded-full bg-current animate-ping"></span>
               )}
-              {status.replace('_', ' ')}
+              {status}
             </div>
           </div>
           
@@ -216,7 +222,18 @@ const BookingForm: React.FC = () => {
       {isSending && (
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center space-y-4">
           <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="font-extrabold text-slate-900 uppercase tracking-widest text-xs">Codsigaaga Waa Loo Dirayaa Emailkaaga...</p>
+          <p className="font-extrabold text-slate-900 uppercase tracking-widest text-xs">Codsigaaga Waa Loo Dirayaa...</p>
+        </div>
+      )}
+
+      <div className="text-center mb-4">
+        <h3 className="text-xl font-black text-slate-800 uppercase tracking-widest">Book Online</h3>
+        <p className="text-slate-500 text-xs">Fadlan xogtaada geli si aan u soo gaarno</p>
+      </div>
+
+      {errorMessage && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-2xl animate-shake">
+          <p className="text-red-700 text-xs font-bold leading-relaxed">{errorMessage}</p>
         </div>
       )}
 
@@ -225,6 +242,7 @@ const BookingForm: React.FC = () => {
           <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Magacaaga oo Buuxa</label>
           <input 
             type="text" 
+            name="fullName"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
             placeholder="Geli magaca"
@@ -236,6 +254,7 @@ const BookingForm: React.FC = () => {
           <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Emailkaaga</label>
           <input 
             type="email" 
+            name="email"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
             placeholder="tusaale@email.com"
@@ -250,6 +269,7 @@ const BookingForm: React.FC = () => {
           <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Lambarka Telefoonka</label>
           <input 
             type="tel" 
+            name="phone"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
             placeholder="+1 (___) ___-____"
@@ -260,6 +280,7 @@ const BookingForm: React.FC = () => {
         <div className="space-y-2">
           <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Nooca Adeegga</label>
           <select 
+            name="serviceType"
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 cursor-pointer"
             value={formData.serviceType}
             onChange={(e) => setFormData({...formData, serviceType: e.target.value as ServiceType})}
@@ -294,6 +315,7 @@ const BookingForm: React.FC = () => {
       <div className="space-y-2">
         <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sharaxaad kooban</label>
         <textarea 
+          name="message"
           required
           rows={3}
           className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 resize-none"
@@ -308,8 +330,19 @@ const BookingForm: React.FC = () => {
         disabled={isSending}
         className="w-full bg-[#ea580c] text-white py-6 rounded-2xl font-black text-lg hover:bg-orange-600 transition-all shadow-2xl shadow-orange-600/30 active:scale-95 uppercase tracking-[0.2em] disabled:opacity-50"
       >
-        Book Hubi & Notify Tech
+        Book Now & Notify Tech
       </button>
+
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-4px); }
+          75% { transform: translateX(4px); }
+        }
+        .animate-shake {
+          animation: shake 0.3s ease-in-out;
+        }
+      `}</style>
     </form>
   );
 };
