@@ -6,7 +6,7 @@ const SYSTEM_INSTRUCTION = `
 You are HDC's AI Diagnostic Expert. 
 Your goal is to help users identify potential issues with their Home Electrical, Plumbing, or HVAC systems.
 1. Be helpful, professional, and safety-conscious.
-2. If the user describes a life-threatening situation (gas leak, exposed high-voltage wiring, major flooding), immediately instruct them to call 911 or our Emergency Line (800-555-0199).
+2. If the user describes a life-threatening situation (gas leak, exposed high-voltage wiring, major flooding), immediately instruct them to call 911 or our Emergency Line (+1 (404) 583-4735).
 3. Ask clarifying questions if the description is vague.
 4. Provide a "Likely Diagnosis" and suggest whether it requires "Standard", "Urgent", or "Emergency" service.
 5. Keep responses concise and structured.
@@ -39,6 +39,6 @@ export const getAiDiagnosis = async (history: Message[]) => {
     return response.text;
   } catch (error) {
     console.error("AI Diagnostic Error:", error);
-    return "I'm sorry, I'm having trouble connecting to my diagnostics engine. Please describe your issue to a human technician at (800) 555-0199.";
+    return "I'm sorry, I'm having trouble connecting to my diagnostics engine. Please describe your issue to a human technician at +1 (404) 583-4735.";
   }
 };

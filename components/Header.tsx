@@ -14,8 +14,7 @@ const Header: React.FC = () => {
           </span>
         </div>
         <div className="hidden sm:flex items-center gap-6">
-          <a href="tel:18005550199" className="hover:text-orange-400 transition-colors">(800) 555-0199</a>
-          <span>License #123456789</span>
+          <a href="tel:+14045834735" className="hover:text-orange-400 transition-colors">+1 (404) 583-4735</a>
         </div>
       </div>
 

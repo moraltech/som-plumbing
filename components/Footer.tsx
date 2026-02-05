@@ -87,7 +87,11 @@ const Footer: React.FC = () => {
             </div>
             
             <div className="space-y-2">
-              <p className="text-white font-extrabold text-lg">(800) 555-0199</p>
+              <p className="text-white font-extrabold text-lg">+1 (404) 583-4735</p>
+              <div className="text-slate-400 text-xs flex flex-col gap-1">
+                <span>424 N Indian Creek Dr</span>
+                <span>Clarkston, GA 30021</span>
+              </div>
               <p className="text-slate-400 text-xs">support@hdc.com</p>
               <p className="text-slate-500 text-[10px] uppercase font-bold tracking-tighter">Emergency Dispatch: 24/7 Available</p>
             </div>
