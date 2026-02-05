@@ -10,7 +10,6 @@ import Footer from './components/Footer';
 import StatsSection from './components/StatsSection';
 import AboutSection from './components/AboutSection';
 import ServiceAreaMap from './components/ServiceAreaMap';
-import TechnicianProfiles from './components/TechnicianProfiles';
 import ResidentialSection from './components/ResidentialSection';
 import CommercialSection from './components/CommercialSection';
 
@@ -36,8 +35,6 @@ const App: React.FC = () => {
         <CommercialSection />
 
         <AboutSection />
-
-        <TechnicianProfiles />
         
         <StatsSection />
         
@@ -49,18 +46,8 @@ const App: React.FC = () => {
                   Book Your Professional Service Appointment
                 </h2>
                 <p className="text-xl text-slate-600">
-                  Our certified technicians are standing by. Describe your issue or use our AI diagnostic tool for an instant preliminary assessment.
+                  Our certified technicians are standing by. Describe your issue or use our contact details for an instant preliminary assessment.
                 </p>
-                <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
-                  <h3 className="text-lg font-bold text-blue-900 mb-2">Need immediate help?</h3>
-                  <p className="text-blue-800 mb-4">Our AI assistant can help diagnose common issues and recommend the right service urgency.</p>
-                  <button 
-                    onClick={() => setIsAiOpen(true)}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
-                  >
-                    Launch AI Diagnosis
-                  </button>
-                </div>
                 
                 <div className="space-y-4 pt-4">
                   <h4 className="font-bold text-slate-900">Frequently Asked Questions</h4>

@@ -1,7 +1,7 @@
 
 export enum ServiceType {
   ELECTRICAL = 'Electrical',
-  PLUMBING = 'Pulibing',
+  PLUMBING = 'Plumbing',
   HVAC = 'HVAC',
   EMERGENCY = 'Emergency'
 }
@@ -20,6 +20,8 @@ export interface Message {
   content: string;
 }
 
+export type TechnicianStatus = 'Available' | 'On Another Job' | 'Offline';
+
 export interface Technician {
   id: string;
   name: string;
@@ -30,4 +32,5 @@ export interface Technician {
   rating: number;
   reviews: number;
   imageUrl: string;
+  status: TechnicianStatus;
 }
