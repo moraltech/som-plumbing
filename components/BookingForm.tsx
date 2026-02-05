@@ -89,13 +89,13 @@ const BookingForm: React.FC = () => {
         setSubmitted(true);
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Khalad ayaa ka dhacay server-ka.');
+        throw new Error(errorData.error || 'A server error occurred.');
       }
     } catch (error: any) {
       console.error("Booking submission error:", error);
       setErrorMessage(
-        "Cilad ayaa dhacday: " + (error.message || "Emailka laguma guulaysan in la diro.") + 
-        " Fadlan na soo wac: +1 (404) 583-4735"
+        "An error occurred: " + (error.message || "Failed to send the request.") + 
+        " Please call us instead: +1 (404) 583-4735"
       );
     } finally {
       setIsSending(false);
@@ -115,11 +115,11 @@ const BookingForm: React.FC = () => {
 
   const getStatusLabel = (s: ServiceStatus) => {
     switch (s) {
-      case 'REQUESTED': return 'Codsiga Waa La Helay';
-      case 'ASSIGNING': return 'Farsamayaqaan Ayaa Laguugu Habaynayaa...';
-      case 'EN_ROUTE': return 'Farsamayaqaankii Wuu Soo Socdaa';
-      case 'DELAYED': return 'Dib-u-dhac Yar Ayaa Jira';
-      case 'ON_SITE': return 'Farsamayaqaankii Wuu Ku Soo Gaaray';
+      case 'REQUESTED': return 'Request Received';
+      case 'ASSIGNING': return 'Assigning Technician...';
+      case 'EN_ROUTE': return 'Technician En Route';
+      case 'DELAYED': return 'Slight Delay Detected';
+      case 'ON_SITE': return 'Technician Arrived';
     }
   };
 
@@ -147,14 +147,14 @@ const BookingForm: React.FC = () => {
                 {status === 'ON_SITE' ? '🏠' : '🚚'}
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Status-ka Hadda</p>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Current Status</p>
                 <p className="text-lg font-black text-slate-800">{getStatusLabel(status)}</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Waqtiga Imaanshaha</p>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Arrival ETA</p>
               <p className={`text-2xl font-black ${status === 'ON_SITE' ? 'text-green-600' : 'text-orange-600'}`}>
-                {status === 'ON_SITE' ? 'Wuu yimid' : `${Math.ceil(eta)}daq`}
+                {status === 'ON_SITE' ? 'Arrived' : `${Math.ceil(eta)}min`}
               </p>
             </div>
           </div>
@@ -180,7 +180,7 @@ const BookingForm: React.FC = () => {
             <g transform="translate(340, 40)">
               <circle r="12" fill="#ea580c" className="animate-pulse opacity-20" />
               <circle r="6" fill="#ea580c" />
-              <text y="25" x="-10" fill="white" fontSize="8" fontWeight="bold">GURIGAAGA</text>
+              <text y="25" x="-15" fill="white" fontSize="8" fontWeight="bold">YOUR HOME</text>
             </g>
             <g className="transition-all duration-1000 ease-linear"
                style={{ transform: `translate(${50 + (progress * 3)}px, ${250 - (progress * 2)}px)` }}>
@@ -207,7 +207,7 @@ const BookingForm: React.FC = () => {
             </a>
           </div>
           <button onClick={() => window.location.reload()} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all shadow-xl">
-            Codsasho Cusub
+            New Booking
           </button>
         </div>
       </div>
@@ -222,13 +222,13 @@ const BookingForm: React.FC = () => {
       {isSending && (
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center space-y-4">
           <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="font-extrabold text-slate-900 uppercase tracking-widest text-xs">Codsigaaga Waa Loo Dirayaa...</p>
+          <p className="font-extrabold text-slate-900 uppercase tracking-widest text-xs">Sending Request...</p>
         </div>
       )}
 
       <div className="text-center mb-4">
         <h3 className="text-xl font-black text-slate-800 uppercase tracking-widest">Book Online</h3>
-        <p className="text-slate-500 text-xs">Fadlan xogtaada geli si aan u soo gaarno</p>
+        <p className="text-slate-500 text-xs">Please enter your details to get started</p>
       </div>
 
       {errorMessage && (
@@ -239,25 +239,25 @@ const BookingForm: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Magacaaga oo Buuxa</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Full Name</label>
           <input 
             type="text" 
             name="fullName"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
-            placeholder="Geli magaca"
+            placeholder="Enter your name"
             value={formData.fullName}
             onChange={(e) => setFormData({...formData, fullName: e.target.value})}
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Emailkaaga</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Email Address</label>
           <input 
             type="email" 
             name="email"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
-            placeholder="tusaale@email.com"
+            placeholder="example@email.com"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
           />
@@ -266,7 +266,7 @@ const BookingForm: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Lambarka Telefoonka</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phone Number</label>
           <input 
             type="tel" 
             name="phone"
@@ -278,7 +278,7 @@ const BookingForm: React.FC = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Nooca Adeegga</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Service Type</label>
           <select 
             name="serviceType"
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 cursor-pointer"
@@ -293,7 +293,7 @@ const BookingForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Heerka Degdegga</label>
+        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Urgency Level</label>
         <div className="grid grid-cols-3 gap-3">
           {['Standard', 'Urgent', 'Emergency'].map((level) => (
             <button
@@ -313,13 +313,13 @@ const BookingForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sharaxaad kooban</label>
+        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Brief Description</label>
         <textarea 
           name="message"
           required
           rows={3}
           className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 resize-none"
-          placeholder="Maxaad u baahan tahay in lagaa caawiyo?"
+          placeholder="How can we help you today?"
           value={formData.description}
           onChange={(e) => setFormData({...formData, description: e.target.value})}
         />
