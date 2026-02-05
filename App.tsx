@@ -8,14 +8,17 @@ import BookingForm from './components/BookingForm';
 import AIAssistant from './components/AIAssistant';
 import Footer from './components/Footer';
 import StatsSection from './components/StatsSection';
-import TechnicianProfiles from './components/TechnicianProfiles';
+import AboutSection from './components/AboutSection';
 import ServiceAreaMap from './components/ServiceAreaMap';
+import TechnicianProfiles from './components/TechnicianProfiles';
+import ResidentialSection from './components/ResidentialSection';
+import CommercialSection from './components/CommercialSection';
 
 const App: React.FC = () => {
   const [isAiOpen, setIsAiOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
       
       <main className="flex-grow">
@@ -28,11 +31,17 @@ const App: React.FC = () => {
         
         <Services />
 
+        <ResidentialSection />
+        
+        <CommercialSection />
+
+        <AboutSection />
+
         <TechnicianProfiles />
         
         <StatsSection />
         
-        <section id="booking" className="py-20 bg-white">
+        <section id="booking" className="py-20 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-6">

@@ -4,38 +4,32 @@ import React, { useState } from 'react';
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
-      {/* Top bar */}
-      <div className="bg-slate-900 text-white py-2 px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm font-medium">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1">
-            <span className="text-orange-500">⚡</span> 24/7 Emergency Support
-          </span>
-        </div>
-        <div className="hidden sm:flex items-center gap-6">
-          <a href="tel:+14045834735" className="hover:text-orange-400 transition-colors">+1 (404) 583-4735</a>
-        </div>
-      </div>
+  const navLinks = [
+    { name: 'Services', href: '#services' },
+    { name: 'Residential', href: '#residential' },
+    { name: 'Commercial', href: '#commercial' },
+    { name: 'About', href: '#about' },
+  ];
 
+  return (
+    <header className="sticky top-0 z-50 bg-white shadow-sm">
       {/* Main Nav */}
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
         <div 
-          className="flex items-center cursor-pointer h-full py-2" 
+          className="flex items-center cursor-pointer h-full py-4" 
           onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
         >
           <img 
             src="https://uploads.onecompiler.io/44cmwnab3/44cquz7zb/HDC%20LOGO%20.png" 
-            alt="HDC Logo" 
-            className="h-full w-auto object-contain max-h-[60px]"
+            alt="HDC PowerFlow Logo" 
+            className="h-full w-auto object-contain max-h-[64px]"
             onError={(e) => {
-              // Fallback if image fails to load
               e.currentTarget.style.display = 'none';
               const parent = e.currentTarget.parentElement;
               if (parent) {
                 const text = document.createElement('span');
-                text.className = "text-2xl font-extrabold text-blue-900 font-montserrat tracking-tight uppercase";
-                text.innerText = "HDC";
+                text.className = "text-2xl font-extrabold text-blue-900 font-montserrat tracking-tight";
+                text.innerText = "HDC PowerFlow";
                 parent.appendChild(text);
               }
             }}
@@ -43,12 +37,20 @@ const Header: React.FC = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <a href="#services" className="text-slate-700 hover:text-blue-900 font-semibold transition-colors">Services</a>
-          <a href="#residential" className="text-slate-700 hover:text-blue-900 font-semibold transition-colors">Residential</a>
-          <a href="#commercial" className="text-slate-700 hover:text-blue-900 font-semibold transition-colors">Commercial</a>
-          <a href="#about" className="text-slate-700 hover:text-blue-900 font-semibold transition-colors">About</a>
-          <a href="#booking" className="bg-orange-600 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-orange-700 transition-all hover:scale-105 shadow-md">
+        <div className="hidden md:flex items-center gap-10">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name}
+              href={link.href} 
+              className="text-slate-600 hover:text-blue-900 font-bold text-[15px] transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a 
+            href="#booking" 
+            className="bg-[#e95e13] text-white px-7 py-3 rounded-xl font-extrabold text-[15px] hover:bg-orange-700 transition-all hover:scale-105 shadow-md ml-4"
+          >
             Book Online
           </a>
         </div>
@@ -66,11 +68,22 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-100 py-4 px-4 space-y-4 shadow-xl">
-          <a href="#services" className="block text-lg font-semibold text-slate-700 py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Services</a>
-          <a href="#residential" className="block text-lg font-semibold text-slate-700 py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Residential</a>
-          <a href="#commercial" className="block text-lg font-semibold text-slate-700 py-2 border-b border-slate-50" onClick={() => setIsMobileMenuOpen(false)}>Commercial</a>
-          <a href="#booking" className="block w-full text-center bg-orange-600 text-white px-6 py-3 rounded-lg font-bold" onClick={() => setIsMobileMenuOpen(false)}>
+        <div className="md:hidden bg-white border-t border-slate-100 py-6 px-4 space-y-4 shadow-xl">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name}
+              href={link.href} 
+              className="block text-lg font-bold text-slate-700 py-2 border-b border-slate-50" 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </a>
+          ))}
+          <a 
+            href="#booking" 
+            className="block w-full text-center bg-[#e95e13] text-white px-6 py-4 rounded-xl font-extrabold text-lg" 
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Book Online
           </a>
         </div>
