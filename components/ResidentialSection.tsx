@@ -34,11 +34,15 @@ const ResidentialSection: React.FC = () => {
           <div className="lg:w-1/2">
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1513694490325-c4d7d0568be3?q=80&w=2070&auto=format&fit=crop" 
-                alt="Residential home interior" 
-                className="w-full h-auto object-cover"
+                src="https://images.unsplash.com/photo-1541604193435-225878996ac3?q=80&w=1200&auto=format&fit=crop" 
+                alt="Professional technician working in a modern residential home" 
+                className="w-full h-auto object-cover min-h-[450px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white/20">
+                <p className="text-[10px] font-black text-orange-600 uppercase tracking-widest">Home Service</p>
+                <p className="text-slate-900 font-bold text-sm">Trusted by Families</p>
+              </div>
             </div>
           </div>
         </div>

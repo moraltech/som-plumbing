@@ -2,6 +2,10 @@
 import React from 'react';
 import { Technician, ServiceType } from '../types';
 
+interface TechnicianProfilesProps {
+  onBookTech: () => void;
+}
+
 const technicians: Technician[] = [
   {
     id: 'tech-1',
@@ -49,9 +53,9 @@ const getStatusStyles = (status: string) => {
   }
 };
 
-const TechnicianProfiles: React.FC = () => {
+const TechnicianProfiles: React.FC<TechnicianProfilesProps> = ({ onBookTech }) => {
   return (
-    <section id="about" className="py-24 bg-white overflow-hidden">
+    <section id="team" className="py-24 bg-slate-50 overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-orange-600 font-bold tracking-widest uppercase text-sm mb-4">Our Specialists</h2>
@@ -65,7 +69,7 @@ const TechnicianProfiles: React.FC = () => {
           {technicians.map((tech) => (
             <div 
               key={tech.id} 
-              className="group bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all"
+              className="group bg-white rounded-3xl overflow-hidden border border-slate-100 hover:shadow-xl transition-all"
             >
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -84,8 +88,11 @@ const TechnicianProfiles: React.FC = () => {
                 <h4 className="text-2xl font-bold text-slate-900 mb-1">{tech.name}</h4>
                 <p className="text-orange-600 font-bold text-xs uppercase mb-4">{tech.role}</p>
                 <p className="text-slate-600 text-sm italic mb-6">"{tech.bio}"</p>
-                <button className="w-full py-3 bg-blue-900 text-white rounded-xl font-bold text-sm hover:bg-blue-800 transition-colors">
-                  View Full Bio
+                <button 
+                  onClick={onBookTech}
+                  className="w-full py-3 bg-blue-900 text-white rounded-xl font-bold text-sm hover:bg-blue-800 transition-colors shadow-lg active:scale-95"
+                >
+                  Book with {tech.name.split(' ')[0]}
                 </button>
               </div>
             </div>

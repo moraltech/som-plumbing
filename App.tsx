@@ -5,30 +5,33 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import TrustBadges from './components/TrustBadges';
 import BookingForm from './components/BookingForm';
-import AIAssistant from './components/AIAssistant';
 import Footer from './components/Footer';
 import StatsSection from './components/StatsSection';
 import AboutSection from './components/AboutSection';
 import ServiceAreaMap from './components/ServiceAreaMap';
 import ResidentialSection from './components/ResidentialSection';
 import CommercialSection from './components/CommercialSection';
+import { ServiceType } from './types';
 
 const App: React.FC = () => {
-  const [isAiOpen, setIsAiOpen] = useState(false);
+  const [preSelectedService, setPreSelectedService] = useState<ServiceType | undefined>(undefined);
+
+  const handleOpenBooking = (service?: ServiceType) => {
+    if (service) setPreSelectedService(service);
+    const el = document.getElementById('booking');
+    el?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
       <Header />
       
       <main className="flex-grow">
-        <Hero onOpenBooking={() => {
-          const el = document.getElementById('booking');
-          el?.scrollIntoView({ behavior: 'smooth' });
-        }} />
+        <Hero onOpenBooking={() => handleOpenBooking()} />
         
         <TrustBadges />
         
-        <Services />
+        <Services onSelectService={handleOpenBooking} />
 
         <ResidentialSection />
         
@@ -37,8 +40,8 @@ const App: React.FC = () => {
         <AboutSection />
         
         <StatsSection />
-        
-        <section id="booking" className="py-20 bg-slate-50">
+
+        <section id="booking" className="py-20 bg-slate-50 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
               <div className="space-y-6">
@@ -63,12 +66,12 @@ const App: React.FC = () => {
                       What areas do you serve?
                       <span className="group-open:rotate-180 transition-transform">▼</span>
                     </summary>
-                    <p className="mt-2 text-slate-600 pl-4 border-l-2 border-orange-500">We provide coverage across major metropolitan areas in the USA, with local hubs in over 50 cities.</p>
+                    <p className="mt-2 text-slate-600 pl-4 border-l-2 border-orange-500">We provide coverage across major metropolitan areas, with local hubs in over 50 cities.</p>
                   </details>
                 </div>
               </div>
               
-              <BookingForm />
+              <BookingForm initialService={preSelectedService} />
             </div>
           </div>
         </section>
@@ -77,21 +80,6 @@ const App: React.FC = () => {
       </main>
 
       <Footer />
-      
-      {/* AI Assistant Modal/Floating Component */}
-      <AIAssistant isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
-      
-      {/* Floating CTA for Mobile */}
-      <div className="md:hidden fixed bottom-6 right-6 z-40">
-        <button 
-          onClick={() => setIsAiOpen(true)}
-          className="bg-orange-600 text-white p-4 rounded-full shadow-2xl hover:bg-orange-700 transition-transform active:scale-95 flex items-center justify-center"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-          </svg>
-        </button>
-      </div>
     </div>
   );
 };

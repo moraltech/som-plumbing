@@ -4,12 +4,16 @@ import { BookingFormData, ServiceType } from '../types';
 
 type ServiceStatus = 'REQUESTED' | 'ASSIGNING' | 'EN_ROUTE' | 'DELAYED' | 'ON_SITE';
 
-const BookingForm: React.FC = () => {
+interface BookingFormProps {
+  initialService?: ServiceType;
+}
+
+const BookingForm: React.FC<BookingFormProps> = ({ initialService }) => {
   const [formData, setFormData] = useState<BookingFormData>({
     fullName: '',
     email: '',
     phone: '',
-    serviceType: ServiceType.ELECTRICAL,
+    serviceType: initialService || ServiceType.ELECTRICAL,
     description: '',
     urgency: 'Standard'
   });
@@ -21,10 +25,20 @@ const BookingForm: React.FC = () => {
   const [eta, setEta] = useState(45); // minutes
   const [progress, setProgress] = useState(0); // 0 to 100 for map animation
 
+  // Sync initialService when it changes from external triggers
+  useEffect(() => {
+    if (initialService) {
+      setFormData(prev => ({ ...prev, serviceType: initialService }));
+    }
+  }, [initialService]);
+
   // Real-time tracking simulation logic
   useEffect(() => {
     if (submitted) {
       const timers: any[] = [];
+      setProgress(0);
+      setEta(45);
+      setStatus('REQUESTED');
 
       timers.push(setTimeout(() => {
         setStatus('ASSIGNING');
@@ -67,7 +81,6 @@ const BookingForm: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      // Formspree API call for hassenali15544@gmail.com
       const response = await fetch('https://formspree.io/f/mqakpvel', {
         method: 'POST',
         headers: {
@@ -100,6 +113,18 @@ const BookingForm: React.FC = () => {
     } finally {
       setIsSending(false);
     }
+  };
+
+  const resetForm = () => {
+    setSubmitted(false);
+    setFormData({
+      fullName: '',
+      email: '',
+      phone: '',
+      serviceType: ServiceType.ELECTRICAL,
+      description: '',
+      urgency: 'Standard'
+    });
   };
 
   const getStatusColor = (s: ServiceStatus) => {
@@ -206,7 +231,7 @@ const BookingForm: React.FC = () => {
               </svg>
             </a>
           </div>
-          <button onClick={() => window.location.reload()} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all shadow-xl">
+          <button onClick={resetForm} className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-800 transition-all shadow-xl">
             New Booking
           </button>
         </div>
@@ -226,9 +251,25 @@ const BookingForm: React.FC = () => {
         </div>
       )}
 
+      {initialService && (
+        <div className="bg-orange-50 border border-orange-100 p-3 rounded-xl flex items-center justify-between animate-fadeIn">
+          <div className="flex items-center gap-2">
+            <span className="text-orange-500">✅</span>
+            <span className="text-xs font-black text-orange-900 uppercase tracking-widest">Selected: {formData.serviceType}</span>
+          </div>
+          <button 
+            type="button" 
+            onClick={() => setFormData(prev => ({...prev, serviceType: ServiceType.ELECTRICAL}))}
+            className="text-[10px] font-bold text-orange-600 underline"
+          >
+            Change
+          </button>
+        </div>
+      )}
+
       <div className="text-center mb-4">
         <h3 className="text-xl font-black text-slate-800 uppercase tracking-widest">Book Online</h3>
-        <p className="text-slate-500 text-xs">Please enter your details to get started</p>
+        <p className="text-slate-500 text-xs">Complete the form for instant dispatch</p>
       </div>
 
       {errorMessage && (
@@ -245,19 +286,19 @@ const BookingForm: React.FC = () => {
             name="fullName"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
-            placeholder="Enter your name"
+            placeholder="Your name"
             value={formData.fullName}
             onChange={(e) => setFormData({...formData, fullName: e.target.value})}
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Email Address</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Email</label>
           <input 
             type="email" 
             name="email"
             required
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300"
-            placeholder="example@email.com"
+            placeholder="email@example.com"
             value={formData.email}
             onChange={(e) => setFormData({...formData, email: e.target.value})}
           />
@@ -266,7 +307,7 @@ const BookingForm: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phone Number</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Phone</label>
           <input 
             type="tel" 
             name="phone"
@@ -278,7 +319,7 @@ const BookingForm: React.FC = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Service Type</label>
+          <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Type of Service</label>
           <select 
             name="serviceType"
             className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 cursor-pointer"
@@ -293,7 +334,7 @@ const BookingForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Urgency Level</label>
+        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Urgency</label>
         <div className="grid grid-cols-3 gap-3">
           {['Standard', 'Urgent', 'Emergency'].map((level) => (
             <button
@@ -313,13 +354,13 @@ const BookingForm: React.FC = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Brief Description</label>
+        <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Issue Description</label>
         <textarea 
           name="message"
           required
           rows={3}
           className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all font-bold text-slate-900 placeholder:text-slate-300 resize-none"
-          placeholder="How can we help you today?"
+          placeholder="What seems to be the problem?"
           value={formData.description}
           onChange={(e) => setFormData({...formData, description: e.target.value})}
         />

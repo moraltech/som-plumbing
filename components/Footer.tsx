@@ -33,11 +33,14 @@ const Footer: React.FC = () => {
           
           {/* Brand */}
           <div className="space-y-6">
-            <img 
-              src="https://uploads.onecompiler.io/44cmwnab3/44cquz7zb/HDC%20LOGO%20.png" 
-              alt="HDC Logo" 
-              className="h-10 w-auto brightness-0 invert"
-            />
+            <div className="flex flex-col">
+              <span className="text-2xl font-black text-white tracking-tighter leading-none">
+                HDC<span className="text-orange-600">.</span>
+              </span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 leading-none mt-1">
+                PowerFlow
+              </span>
+            </div>
             <p className="text-sm leading-relaxed text-slate-400">
               Licensed expertise in electrical, plumbing, and HVAC systems. Providing nationwide reliability for over 15 years.
             </p>
@@ -48,9 +51,8 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Company</h4>
             <ul className="space-y-4 text-sm">
               <li><a href="#services" className="hover:text-orange-500 transition-colors">Our Services</a></li>
-              <li><a href="#about" className="hover:text-orange-500 transition-colors">Our Team</a></li>
               <li><a href="#booking" className="hover:text-orange-500 transition-colors">Book Online</a></li>
-              <li><a href="#" className="hover:text-orange-500 transition-colors">Contact Us</a></li>
+              <li><a href="mailto:support@hdc.com" className="hover:text-orange-500 transition-colors">Email Support</a></li>
             </ul>
           </div>
 
@@ -81,11 +83,13 @@ const Footer: React.FC = () => {
               <input 
                 type="text" 
                 placeholder="Zip Code" 
-                className="bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-xs flex-grow outline-none focus:border-orange-500"
+                className={`bg-slate-800 border rounded-lg px-3 py-2 text-xs flex-grow outline-none transition-all ${
+                  zipStatus === 'valid' ? 'border-green-500' : zipStatus === 'invalid' ? 'border-red-500' : 'border-slate-700 focus:border-orange-500'
+                }`}
                 value={zipInput}
                 onChange={(e) => setZipInput(e.target.value)}
               />
-              <button className="bg-orange-600 text-white px-4 py-2 rounded-lg text-xs font-bold">Check</button>
+              <button className="bg-orange-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-700">Check</button>
             </form>
           </div>
 
@@ -94,12 +98,11 @@ const Footer: React.FC = () => {
             <h4 className="text-white font-bold text-sm uppercase tracking-widest">Contact</h4>
             <div className="space-y-4">
               <div>
-                <p className="text-white font-bold">+1 (404) 583-4735</p>
+                <a href="tel:+14045834735" className="text-white font-bold hover:text-orange-500 transition-colors">+1 (404) 583-4735</a>
                 <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Emergency Line</p>
               </div>
               <div>
-                <p className="text-white font-bold">support@hdc.com</p>
-                {/* Fixed syntax error for '<' by using &lt; */}
+                <a href="mailto:support@hdc.com" className="text-white font-bold hover:text-orange-500 transition-colors">support@hdc.com</a>
                 <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Response &lt; 2 Hours</p>
               </div>
             </div>
@@ -109,9 +112,9 @@ const Footer: React.FC = () => {
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs font-bold uppercase tracking-widest text-slate-500">
           <p>© 2024 HDC PowerFlow. All Rights Reserved.</p>
           <div className="flex gap-8 mt-4 md:mt-0">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Legal</a>
+            <a href="#" className="hover:text-white">Privacy</a>
+            <a href="#" className="hover:text-white">Terms</a>
+            <a href="#" className="hover:text-white">Legal</a>
           </div>
         </div>
       </div>
