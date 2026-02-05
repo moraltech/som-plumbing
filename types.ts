@@ -19,3 +19,15 @@ export interface Message {
   role: 'user' | 'model';
   content: string;
 }
+
+export interface Technician {
+  id: string;
+  name: string;
+  role: string;
+  expertise: ServiceType[];
+  certifications: string[];
+  bio: string;
+  rating: number;
+  reviews: number;
+  imageUrl: string;
+}

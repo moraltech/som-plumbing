@@ -3,8 +3,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { Message } from "../types";
 
 const SYSTEM_INSTRUCTION = `
-You are Som Pulibing's AI Diagnostic Expert. 
-Your goal is to help users identify potential issues with their Home Electrical, Pulibing, or HVAC systems.
+You are HDC's AI Diagnostic Expert. 
+Your goal is to help users identify potential issues with their Home Electrical, Plumbing, or HVAC systems.
 1. Be helpful, professional, and safety-conscious.
 2. If the user describes a life-threatening situation (gas leak, exposed high-voltage wiring, major flooding), immediately instruct them to call 911 or our Emergency Line (800-555-0199).
 3. Ask clarifying questions if the description is vague.
@@ -14,7 +14,8 @@ Your goal is to help users identify potential issues with their Home Electrical,
 `;
 
 export const getAiDiagnosis = async (history: Message[]) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+  // Fix: Directly use process.env.API_KEY with named parameter as per SDK guidelines
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   // Convert history to contents format
   const contents = history.map(msg => ({
@@ -34,6 +35,7 @@ export const getAiDiagnosis = async (history: Message[]) => {
       },
     });
 
+    // Fix: Access response.text property directly (not a method) as per SDK guidelines
     return response.text;
   } catch (error) {
     console.error("AI Diagnostic Error:", error);

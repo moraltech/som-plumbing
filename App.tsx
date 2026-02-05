@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -7,6 +8,8 @@ import BookingForm from './components/BookingForm';
 import AIAssistant from './components/AIAssistant';
 import Footer from './components/Footer';
 import StatsSection from './components/StatsSection';
+import TechnicianProfiles from './components/TechnicianProfiles';
+import ServiceAreaMap from './components/ServiceAreaMap';
 
 const App: React.FC = () => {
   const [isAiOpen, setIsAiOpen] = useState(false);
@@ -24,6 +27,8 @@ const App: React.FC = () => {
         <TrustBadges />
         
         <Services />
+
+        <TechnicianProfiles />
         
         <StatsSection />
         
@@ -71,6 +76,8 @@ const App: React.FC = () => {
             </div>
           </div>
         </section>
+
+        <ServiceAreaMap />
       </main>
 
       <Footer />

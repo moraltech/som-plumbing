@@ -26,8 +26,8 @@ const Header: React.FC = () => {
           onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
         >
           <img 
-            src="https://uploads.onecompiler.io/44cmwnab3/44cmwm67f/som%20pumbinig%202.png" 
-            alt="Som Pulibing Logo" 
+            src="https://uploads.onecompiler.io/44cmwnab3/44cquz7zb/HDC%20LOGO%20.png" 
+            alt="HDC Logo" 
             className="h-full w-auto object-contain max-h-[60px]"
             onError={(e) => {
               // Fallback if image fails to load
@@ -36,7 +36,7 @@ const Header: React.FC = () => {
               if (parent) {
                 const text = document.createElement('span');
                 text.className = "text-2xl font-extrabold text-blue-900 font-montserrat tracking-tight uppercase";
-                text.innerText = "SOM PULIBING";
+                text.innerText = "HDC";
                 parent.appendChild(text);
               }
             }}
