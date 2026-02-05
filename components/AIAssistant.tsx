@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
 import { getAiDiagnosis } from '../services/geminiService';
@@ -10,7 +9,7 @@ interface AIAssistantProps {
 
 const AIAssistant: React.FC<AIAssistantProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', content: "Hello! I'm the Sompulibing Diagnostic Assistant. Describe your issue and I'll help you figure out what's wrong." }
+    { role: 'model', content: "Hello! I'm the Som Pulibing Diagnostic Assistant. Describe your issue and I'll help you figure out what's wrong." }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +44,7 @@ const AIAssistant: React.FC<AIAssistantProps> = ({ isOpen, onClose }) => {
             <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-xl">🤖</div>
             <div>
               <h3 className="text-white font-bold leading-tight">AI Diagnostic Tool</h3>
-              <p className="text-blue-200 text-xs font-medium uppercase tracking-widest">Sompulibing Intelligence</p>
+              <p className="text-blue-200 text-xs font-medium uppercase tracking-widest">Som Pulibing Intelligence</p>
             </div>
           </div>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
