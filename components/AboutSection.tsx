@@ -30,19 +30,6 @@ const AboutSection: React.FC = () => {
                 <p className="text-sm text-slate-600 group-hover:text-blue-100">Setting the gold standard for residential and commercial technical services across the nation.</p>
               </div>
             </div>
-
-            <div className="pt-4">
-               <div className="flex items-center gap-4 text-slate-900 font-bold">
-                 <div className="flex -space-x-3">
-                   {[1,2,3,4].map(i => (
-                     <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
-                       <img src={`https://i.pravatar.cc/100?u=hdc${i}`} alt="User" />
-                     </div>
-                   ))}
-                 </div>
-                 <span className="text-sm">Trusted by 10,000+ local residents</span>
-               </div>
-            </div>
           </div>
 
           {/* Visual Column */}
