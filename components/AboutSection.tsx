@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const AboutSection: React.FC = () => {
@@ -14,7 +13,7 @@ const AboutSection: React.FC = () => {
                 Excellence in Every <br />
                 <span className="text-blue-900">Home Service</span>
               </h3>
-              <p className="text-xl text-slate-600 leading-relaxed">
+              <p className="text-xl text-slate-600 leading-relaxed font-medium">
                 HDC has been a cornerstone of reliable home maintenance for over 15 years. We started with a simple mission: to provide high-quality, honest, and professional services that homeowners can depend on, day or night.
               </p>
             </div>
@@ -52,21 +51,18 @@ const AboutSection: React.FC = () => {
             <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-blue-100 rounded-full blur-3xl opacity-60"></div>
             
             <div className="relative grid grid-cols-2 gap-4">
-              <div className="space-y-4 pt-12">
-                <div className="h-64 rounded-3xl overflow-hidden shadow-2xl">
-                  <img src="https://images.unsplash.com/photo-1581578731548-c64695ce6958?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover" alt="Service" />
-                </div>
-                <div className="bg-orange-600 p-8 rounded-3xl text-white shadow-xl">
-                  <p className="text-4xl font-extrabold mb-1">15+</p>
-                  <p className="text-xs font-bold uppercase tracking-widest opacity-80">Years in Business</p>
+              <div className="space-y-4 pt-12 flex flex-col">
+                <div className="bg-orange-600 p-10 rounded-[2.5rem] text-white shadow-2xl flex-grow flex flex-col justify-center items-center text-center">
+                  <p className="text-5xl font-black mb-2">15+</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-90">Years of Experience</p>
                 </div>
               </div>
               <div className="space-y-4">
-                <div className="bg-blue-900 p-8 rounded-3xl text-white shadow-xl">
-                  <p className="text-4xl font-extrabold mb-1">24/7</p>
-                  <p className="text-xs font-bold uppercase tracking-widest opacity-80">Fast Response</p>
+                <div className="bg-slate-900 p-10 rounded-[2.5rem] text-white shadow-2xl text-center">
+                  <p className="text-4xl font-black mb-1">24/7</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Support Ready</p>
                 </div>
-                <div className="h-80 rounded-3xl overflow-hidden shadow-2xl">
+                <div className="h-80 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
                   <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?q=80&w=600&auto=format&fit=crop" className="w-full h-full object-cover" alt="Technical Work" />
                 </div>
               </div>

@@ -1,120 +1,97 @@
-
-import React, { useState } from 'react';
-
-const miniMapAreas = [
-  { id: 'm1', name: 'Downtown ATL', x: 40, y: 55, techs: 12 },
-  { id: 'm2', name: 'Buckhead', x: 35, y: 35, techs: 8 },
-  { id: 'm3', name: 'Clarkston (HQ)', x: 75, y: 48, techs: 15 },
-  { id: 'm4', name: 'Decatur', x: 60, y: 65, techs: 9 },
-];
+import React from 'react';
 
 const Footer: React.FC = () => {
-  const [hoveredArea, setHoveredArea] = useState<typeof miniMapAreas[0] | null>(null);
-  const [zipInput, setZipInput] = useState('');
-  const [zipStatus, setZipStatus] = useState<'idle' | 'checking' | 'valid' | 'invalid'>('idle');
-
-  const checkZip = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!zipInput) return;
-    setZipStatus('checking');
-    setTimeout(() => {
-      if (zipInput.startsWith('30')) {
-        setZipStatus('valid');
-      } else {
-        setZipStatus('invalid');
-      }
-    }, 1000);
+  const handleNavClick = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <footer className="bg-slate-900 text-slate-300 pt-20 pb-10">
+    <footer className="bg-slate-900 text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          
-          {/* Brand */}
-          <div className="space-y-6">
-            <div className="flex flex-col">
-              <span className="text-2xl font-black text-white tracking-tighter leading-none">
-                HDC<span className="text-orange-600">.</span>
-              </span>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 leading-none mt-1">
-                PowerFlow
-              </span>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          {/* Logo & Info */}
+          <div className="col-span-1 md:col-span-1 space-y-6">
+            <div 
+              className="flex items-center cursor-pointer" 
+              onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+            >
+              <img 
+                src="https://uploads.onecompiler.io/44cmwnab3/44cquz7zb/HDC%20LOGO%20.png" 
+                alt="HDC PowerFlow" 
+                className="h-10 w-auto object-contain brightness-0 invert"
+              />
             </div>
-            <p className="text-sm leading-relaxed text-slate-400">
-              Licensed expertise in electrical, plumbing, and HVAC systems. Providing nationwide reliability for over 15 years.
+            <p className="text-slate-400 text-sm leading-relaxed font-medium">
+              Nationwide leaders in electrical, plumbing, and HVAC solutions. Licensed, insured, and ready to serve 24/7 across metropolitan areas.
             </p>
+            <div className="flex gap-4">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-orange-600 transition-colors cursor-pointer group">
+                  <div className="w-1.5 h-1.5 bg-white/40 rounded-full group-hover:bg-white transition-colors"></div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Links */}
+          {/* Quick Links */}
           <div>
-            <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Company</h4>
-            <ul className="space-y-4 text-sm">
-              <li><a href="#services" className="hover:text-orange-500 transition-colors">Our Services</a></li>
-              <li><a href="#booking" className="hover:text-orange-500 transition-colors">Book Online</a></li>
-              <li><a href="mailto:support@hdc.com" className="hover:text-orange-500 transition-colors">Email Support</a></li>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Navigation</h4>
+            <ul className="space-y-4">
+              {['Services', 'Residential', 'Commercial', 'About'].map((item) => (
+                <li key={item}>
+                  <button 
+                    onClick={() => handleNavClick(item.toLowerCase())}
+                    className="text-slate-400 hover:text-orange-500 transition-colors text-sm font-medium flex items-center gap-2"
+                  >
+                    <span className="text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">›</span>
+                    {item}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Service Area */}
-          <div className="space-y-6">
-            <h4 className="text-white font-bold text-sm uppercase tracking-widest">Service Area</h4>
-            <div className="relative h-40 w-full bg-slate-800 rounded-2xl overflow-hidden border border-slate-700">
-              <svg viewBox="0 0 100 100" className="w-full h-full p-4 opacity-50">
-                <path d="M10,20 L40,10 L80,20 L90,60 L70,90 L30,95 L10,60 Z" fill="rgba(255,255,255,0.05)" stroke="white" strokeWidth="0.5" />
-                {miniMapAreas.map(area => (
-                  <circle 
-                    key={area.id} 
-                    cx={area.x} cy={area.y} r="3" 
-                    fill="#ea580c" 
-                    className="cursor-pointer"
-                    onMouseEnter={() => setHoveredArea(area)}
-                    onMouseLeave={() => setHoveredArea(null)}
-                  />
-                ))}
-              </svg>
-              {hoveredArea && (
-                <div className="absolute top-2 left-2 bg-slate-900 border border-slate-700 px-3 py-1 rounded-lg text-[10px] font-bold">
-                  {hoveredArea.name}: {hoveredArea.techs} Techs
-                </div>
-              )}
-            </div>
-            <form onSubmit={checkZip} className="flex gap-2">
-              <input 
-                type="text" 
-                placeholder="Zip Code" 
-                className={`bg-slate-800 border rounded-lg px-3 py-2 text-xs flex-grow outline-none transition-all ${
-                  zipStatus === 'valid' ? 'border-green-500' : zipStatus === 'invalid' ? 'border-red-500' : 'border-slate-700 focus:border-orange-500'
-                }`}
-                value={zipInput}
-                onChange={(e) => setZipInput(e.target.value)}
-              />
-              <button className="bg-orange-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-orange-700">Check</button>
-            </form>
+          {/* Contact */}
+          <div>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Contact Us</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-slate-400 text-sm">
+                <span className="text-orange-600 font-bold mt-1">📍</span>
+                <span>424 N Indian Creek Dr Suite 4C<br/>Clarkston, GA 30021</span>
+              </li>
+              <li className="flex items-center gap-3 text-slate-400 text-sm">
+                <span className="text-orange-600 font-bold">📞</span>
+                +1 (404) 583-4735
+              </li>
+              <li className="flex items-center gap-3 text-slate-400 text-sm">
+                <span className="text-orange-600 font-bold">✉️</span>
+                support@hdcpowerflow.com
+              </li>
+            </ul>
           </div>
 
-          {/* Contact */}
-          <div className="space-y-6">
-            <h4 className="text-white font-bold text-sm uppercase tracking-widest">Contact</h4>
-            <div className="space-y-4">
-              <div>
-                <a href="tel:+14045834735" className="text-white font-bold hover:text-orange-500 transition-colors">+1 (404) 583-4735</a>
-                <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Emergency Line</p>
-              </div>
-              <div>
-                <a href="mailto:support@hdc.com" className="text-white font-bold hover:text-orange-500 transition-colors">support@hdc.com</a>
-                <p className="text-xs text-slate-500 uppercase font-bold tracking-widest">Response &lt; 2 Hours</p>
-              </div>
-            </div>
+          {/* Dispatch Info */}
+          <div className="bg-white/5 p-6 rounded-2xl border border-white/10 flex flex-col">
+            <h4 className="font-bold text-white mb-2 uppercase tracking-widest text-xs">24/7 Emergency</h4>
+            <p className="text-slate-400 text-xs mb-6">Urgent technical support is always available. Average response time: 45 min.</p>
+            <a 
+              href="tel:+14045834735" 
+              className="mt-auto block w-full text-center py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all shadow-lg shadow-orange-600/10 active:scale-95"
+            >
+              Call Dispatch
+            </a>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs font-bold uppercase tracking-widest text-slate-500">
-          <p>© 2024 HDC PowerFlow. All Rights Reserved.</p>
-          <div className="flex gap-8 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white">Privacy</a>
-            <a href="#" className="hover:text-white">Terms</a>
-            <a href="#" className="hover:text-white">Legal</a>
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+          <p>© 2024 HDC PowerFlow. All rights reserved.</p>
+          <div className="flex gap-8">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Legal</a>
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -11,6 +10,8 @@ import AboutSection from './components/AboutSection';
 import ServiceAreaMap from './components/ServiceAreaMap';
 import ResidentialSection from './components/ResidentialSection';
 import CommercialSection from './components/CommercialSection';
+import TestimonialsSection from './components/TestimonialsSection';
+import ExpertiseGrid from './components/ExpertiseGrid';
 import { ServiceType } from './types';
 
 const App: React.FC = () => {
@@ -30,6 +31,8 @@ const App: React.FC = () => {
         <Hero onOpenBooking={() => handleOpenBooking()} />
         
         <TrustBadges />
+
+        <ExpertiseGrid />
         
         <Services onSelectService={handleOpenBooking} />
 
@@ -38,6 +41,8 @@ const App: React.FC = () => {
         <CommercialSection />
 
         <AboutSection />
+
+        <TestimonialsSection />
         
         <StatsSection />
 
